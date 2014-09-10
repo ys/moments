@@ -7,7 +7,7 @@ class Instants < Sinatra::Base
 
   get "/:path" do
     folder = dropbox_client.metadata("/#{params[:path]}", 25000, true, nil, nil, false, true)
-    pictures = folder["contents"].select { |e| e["thumb_exists"] == true }
+    pictures = folder["contents"].select { |e| e["thumb_exists"] == true && !e["path"].match(/_cover\./)}
     erb :instant, locals: { pictures: pictures }
   end
 
