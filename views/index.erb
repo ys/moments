@@ -2,7 +2,7 @@
   <% instants.each do |instant| %>
     <div class="col-md-4">
       <div class="dummy"></div>
-      <a class=cover style="background: url(/thumbs<%= instant["path"] %>/_cover.jpg) no-repeat center;" href="<%= instant["path"] %>">
+      <a class=cover style="background: url(/thumbs<%= URI.escape(instant["path"]) %>/_cover.jpg) no-repeat center;" href="<%= instant["path"] %>">
         <%= instant["path"][1..-1] %>
       </a>
     </div>
