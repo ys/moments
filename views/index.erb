@@ -1,5 +1,10 @@
-<ul>
+<div class="row">
   <% instants.each do |instant| %>
-    <li><a href="<%= instant["path"] %>"><%= instant["path"] %></li>
+    <div class="col-md-4">
+      <div class="dummy"></div>
+      <a class=cover style="background: url(/thumbs<%= instant["path"] %>/_cover.jpg) no-repeat center;" href="<%= instant["path"] %>">
+        <%= instant["path"][1..-1] %>
+      </a>
+    </div>
   <% end %>
-</ul>
+</div>

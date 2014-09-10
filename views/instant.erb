@@ -1,5 +1,5 @@
-<ul>
-  <% pictures.each do |picture| %>
-    <li><img src="/thumbs<%= picture["path"] %>"/></li>
-  <% end %>
-</ul>
+<% pictures.each do |picture| %>
+  <div class="row picture">
+    <img class="col-md-8  col-md-offset-2" src="/thumbs<%= picture["path"] %>"/>
+  </div>
+<% end %>

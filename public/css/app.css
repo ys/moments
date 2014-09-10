@@ -1,0 +1,50 @@
+body {
+  margin:0; padding:0;
+  font: 18px 'Merriweather', serif;
+  border-top: 3px solid #79589F;
+}
+#snowman {
+  font-size: 5em;
+  text-align: center;
+  color: #79589F;
+  margin-bottom:0;
+}
+h1 {
+  font-weight: normal;
+  font-size: 3em;
+  text-align: center;
+  color: #666;
+}
+p {
+  font-size: 1.5em;
+  text-align: center;
+}
+a {
+  color: black;
+}
+a:hover, a:visited {
+  color: #79589F;
+}
+.cover {
+  width: 100%;
+}
+.dummy {
+    margin-top: 100%;
+}
+.cover {
+  position: absolute;
+  top: 15px;
+  bottom: 0;
+  left: 15px;
+  right: 0;
+  text-align:center;
+  padding-top:calc(50% - 30px);
+  font-size: 2em;
+  color: #666;
+}
+.cover:visited {
+  color: #666;
+}
+.picture {
+  margin-bottom: 10px;
+}
