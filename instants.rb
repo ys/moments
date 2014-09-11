@@ -2,7 +2,10 @@ require "json"
 
 class Instants < Sinatra::Base
 
-  cache = Dalli::Client.new
+  Dalli::Client.new(ENV['MEMCACHE_SERVERS'],
+                    username: ENV['MEMCACHE_USERNAME'],
+                    password: ENV['MEMCACHE_PASSWORD'],
+                    expires_in: 3600)
 
   use Rack::Cache,
     verbose:     true,
