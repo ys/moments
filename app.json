@@ -1,0 +1,31 @@
+{
+  "name": "Instants",
+  "description": "A simple place for all your beautiful pictures. Over Dropbox",
+  "keywords": [
+    "dropbox",
+    "photography",
+    "portfolio"
+  ],
+  "website": "http://github.com/ys/instants",
+  "repository": "http://github.com/ys/instants",
+  "logo": "https://cloud.githubusercontent.com/assets/483012/3819730/31b19ffa-1cee-11e4-9a27-8b5e62ebf7f2.png",
+  "scripts": {},
+  "env": {
+    "MOMENTS_NAME": {
+      "description": "The title you want to see on pages",
+      "value": "Moments"
+    },
+    "MOMENTS_EMOJI": {
+      "description": "The emoji you want to see on pages",
+      "value": "☃"
+    },
+    "DROPBOX_TOKEN": {
+      "description": "A dropbox token accessing your pictures. See README for value",
+      "value": "",
+      "required": true
+    }
+  },
+  "addons": [
+    "memcachier"
+  ]
+}
