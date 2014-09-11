@@ -16,6 +16,11 @@ h1 {
   color: #666;
   margin-bottom: 40px;
 }
+
+h1 a:visited, h1 a:hover, h1 a {
+  color: #666;
+}
+
 p {
   font-size: 1.5em;
   text-align: center;
