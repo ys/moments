@@ -32,6 +32,23 @@ class Instants < Sinatra::Base
     t
   end
 
+  get "/cache/flush" do
+    if ENV["FLUSH_TOKEN"] != params[:t]
+      halt 401
+    end
+    settings.cache.flush
+    params[:challenge]
+  end
+
+  post "/cache/flush" do
+    if ENV["FLUSH_TOKEN"] != params[:t]
+      halt 401
+    end
+    settings.cache.flush
+    params[:challenge]
+  end
+
+
   def dropbox_client
     @dropbox_client ||= DropboxClient.new(ENV["DROPBOX_TOKEN"])
   end
