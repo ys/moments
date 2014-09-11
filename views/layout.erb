@@ -15,8 +15,8 @@
   </head>
 
   <body>
-    <p id="snowman">☃</p>
-    <h1><a href=/ >Yannick Schutz</a></h1>
+    <p id="snowman"><%= ENV["MOMENTS_EMOJI"] %></p>
+    <h1><a href=/ ><%= ENV["MOMENTS_NAME"] || "Moments" %></a></h1>
     <div class="container">
       <%= yield %>
     </div>
