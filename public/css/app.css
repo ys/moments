@@ -32,6 +32,7 @@ a:hover, a:visited {
   color: #79589F;
 }
 .cover {
+  background-color: lightgray;
   display: block;
   height: 368px;
 }
