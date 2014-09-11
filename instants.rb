@@ -2,15 +2,16 @@ require "json"
 
 class Instants < Sinatra::Base
 
-  Dalli::Client.new(ENV['MEMCACHE_SERVERS'],
-                    username: ENV['MEMCACHE_USERNAME'],
-                    password: ENV['MEMCACHE_PASSWORD'],
-                    expires_in: 3600)
+  ENV["MEMCACHE_SERVERS"]  = ENV["MEMCACHIER_SERVERS"] if ENV["MEMCACHIER_SERVERS"]
+  ENV["MEMCACHE_USERNAME"] = ENV["MEMCACHIER_USERNAME"] if ENV["MEMCACHIER_USERNAME"]
+  ENV["MEMCACHE_PASSWORD"] = ENV["MEMCACHIER_PASSWORD"] if ENV["MEMCACHIER_PASSWORD"]
+
+  set :cache, Dalli::Client.new
 
   use Rack::Cache,
     verbose:     true,
-    metastore:   cache,
-    entitystore: cache
+    metastore:   settings.cache,
+    entitystore: settings.cache
 
   get '/' do
     cache_control :public, max_age: 3600
