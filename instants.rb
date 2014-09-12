@@ -15,10 +15,13 @@ class Instants < Sinatra::Base
 
   get '/' do
     cache_control :public, max_age: 3600
-    erb :index, locals: { instants: dropbox_client.metadata("/")["contents"] }
+    instants = dropbox_client.metadata("/")["contents"].sort_by {|e| e["client_mtime"] }
+    puts instants
+    erb :index, locals: { instants: instants }
   end
 
   get "/:path" do
+    authorize(params[:path])
     cache_control :public, max_age: 3600
     folder = dropbox_client.metadata("/#{params[:path]}", 25000, true, nil, nil, false, true)
     pictures = folder["contents"].select { |e| e["thumb_exists"] == true && !e["path"].match(/_cover\./)}
@@ -48,6 +51,37 @@ class Instants < Sinatra::Base
     params[:challenge]
   end
 
+  def authorize(path)
+    return unless password(path)
+    authorization = env["HTTP_AUTHORIZATION"]
+    if authorization
+      #WOW SUCH UGLY
+      given_pwd = authorization.split(" ")
+        .last.unpack("m*").first.split(/:/, 2)[1]
+      if password(path) != given_pwd
+        unauthorized!
+      end
+    else
+      unauthorized!
+    end
+  end
+
+  def password(path)
+    @password ||= settings.cache.get(path) || fetch_and_cache_password(path)
+  end
+
+  def fetch_and_cache_password(path)
+    dropbox_client.get_file("/#{path}/password.txt")
+      .tap {|p| settings.cache.set(path, p) }
+  rescue DropboxError => e
+  end
+
+  def unauthorized!
+    headers['Content-Type'] = 'text/plain'
+    headers['Content-Length'] = '0'
+    headers['WWW-Authenticate'] = "Basic realm='Password protected'"
+    halt 401
+  end
 
   def dropbox_client
     @dropbox_client ||= DropboxClient.new(ENV["DROPBOX_TOKEN"])
