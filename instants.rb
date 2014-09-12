@@ -67,12 +67,12 @@ class Instants < Sinatra::Base
   end
 
   def password(path)
-    @password ||= settings.cache.get(path) || fetch_and_cache_password(path)
+    @password ||= settings.cache.get(path + "/password.txt") || fetch_and_cache_password(path)
   end
 
   def fetch_and_cache_password(path)
     dropbox_client.get_file("/#{path}/password.txt")
-      .tap {|p| settings.cache.set(path, p) }
+      .tap {|p| settings.cache.set(path + "/password.txt", p) }
   rescue DropboxError => e
   end
 
