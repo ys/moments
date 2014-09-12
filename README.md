@@ -24,6 +24,7 @@
 - Go to `[DROPBOX_FOLDER]/Apps/[THE_APP_CREATED_IN_DROPBOX]`
 - Create folder for new moments you want to share.
 - Add a cover picture by naming a picture `_cover` and any extension you want.
+- Want password protection? Add a `password.txt` file. Content is the password.
 - Add pictures to the folder.
 - Flush memcached at `https://addons-sso.heroku.com/apps/[HEROKU_APP]/addons/memcachier`
 - Enjoy!
