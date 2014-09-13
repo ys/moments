@@ -1,20 +1,23 @@
 body {
   margin:0; padding:0;
-  font: 18px 'Merriweather', serif;
+  font: 16px 'Merriweather', serif;
   border-top: 3px solid #79589F;
 }
 #snowman {
-  font-size: 5em;
+  margin-top: 67px;
+  font-size: 67px;
   text-align: center;
   color: #79589F;
   margin-bottom:0;
 }
 h1 {
   font-weight: normal;
-  font-size: 3em;
+  font-size: 67px;
+  line-height: 67px;
   text-align: center;
   color: #666;
-  margin-bottom: 40px;
+  margin: 0;
+  margin-bottom: 37px;
 }
 
 h1 a:visited, h1 a:hover, h1 a {
@@ -40,7 +43,13 @@ a:hover, a:visited {
   display: block;
   text-align:center;
   color: #666;
+  margin-top: 16px;
 }
+
+.instant {
+  margin-bottom: 37px;
+}
+
 .picture {
   margin-bottom: 10px;
 }

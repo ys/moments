@@ -1,6 +1,6 @@
 <div class="row">
   <% instants.each do |instant| %>
-    <div class="col-md-4">
+    <div class="col-md-4 instant">
       <div class="dummy"></div>
       <a class="cover img-thumbnail" style="background: url(/thumbs<%= URI.escape(instant["path"]) %>/_cover.jpg) no-repeat center;" href="<%= instant["path"] %>"></a>
       <a class="cover-title" href="<%= instant["path"] %>"><%= instant["path"][1..-1] %></a>
