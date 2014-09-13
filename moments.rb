@@ -20,10 +20,10 @@ class Moments < Sinatra::Base
   end
 
   get "/:path" do
-    authorize(params[:path])
+    authorize!
     cache_control :public, max_age: 3600
     folder = dropbox_client.metadata("/#{params[:path]}", 25000, true, nil, nil, false, true)
-    pictures = folder["contents"].select { |e| e["thumb_exists"] == true && !e["path"].match(/_cover\./)}
+    pictures = folder["contents"].select { |e| e["thumb_exists"] == true && !e["path"].match(/_cover|password/)}
     erb :moment, locals: { pictures: pictures }
   end
 
@@ -35,14 +35,14 @@ class Moments < Sinatra::Base
   end
 
   get "/cache/flush" do
-    if ENV["FLUSH_TOKEN"] != params[:t]
-      halt 401
-    end
-    settings.cache.flush
-    params[:challenge]
+    flush_cache
   end
 
   post "/cache/flush" do
+    flush_cache
+  end
+
+  def flush_cache
     if ENV["FLUSH_TOKEN"] != params[:t]
       halt 401
     end
@@ -50,28 +50,32 @@ class Moments < Sinatra::Base
     params[:challenge]
   end
 
-  def authorize(path)
-    return unless password(path)
-    authorization = env["HTTP_AUTHORIZATION"]
-    if authorization
-      #WOW SUCH UGLY
-      given_pwd = authorization.split(" ")
-        .last.unpack("m*").first.split(/:/, 2)[1]
-      if password(path) != given_pwd
-        unauthorized!
-      end
-    else
-      unauthorized!
-    end
+  def authorize!
+    return unless password
+    return if authorization && password == given_password
+    unauthorized!
   end
 
-  def password(path)
-    settings.cache.get("#{path}/password") || fetch_and_cache_password(path)
+  def given_password
+    user_password.split(/:/, 2)[1]
   end
 
-  def fetch_and_cache_password(path)
-    dropbox_client.get_file("/#{path}/password.txt").strip
-      .tap {|p| settings.cache.set("#{path}/password", p) }
+  def user_password
+    authorization.split(" ").last.unpack("m*").first
+  end
+
+  def authorization
+    env["HTTP_AUTHORIZATION"]
+  end
+
+  def password
+    settings.cache.get("#{params[:path]}/password") || fetch_and_cache_password
+  end
+
+  def fetch_and_cache_password
+    puts env.inspect
+    dropbox_client.get_file("/#{params[:path]}/password.txt").strip
+      .tap {|p| settings.cache.set("#{params[:path]}/password", p) }
   rescue DropboxError => e
   end
 
