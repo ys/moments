@@ -1,4 +1,5 @@
-# Share your best moments, quickly over dropbox.
+# Share your moments, over dropbox.
+**Heroku + Dropbox + your picturs = :heart:**
 
 ## Requirements
 
