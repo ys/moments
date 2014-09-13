@@ -23,6 +23,10 @@
       "description": "A dropbox token accessing your pictures. See README for value",
       "value": "",
       "required": true
+    },
+    "FLUSH_TOKEN": {
+      "description": "A secret key for used by the Dropbox webhook.",
+      "generator": "secret"
     }
   },
   "addons": [

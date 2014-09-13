@@ -20,6 +20,15 @@
 
 *Use the token generated in the dropbox part in setup*
 
+### Dropbox Webhook
+
+This will clean the cache when you add new pictures or moments to your dropbox folder.  
+*You can do it manually via the settings of your app on heroku also but this is the* **recommended way**.
+
+- Get `FLUSH_TOKEN` via `$ heroku config`
+- Fill the `Webhook URIs` field with `http://[YOUR_APP].herokuapp.com/cache/flush?t=[FLUSH_TOKEN]`
+![](http://cl.ly/image/3i1X0L1B0U3e/Screen%20Shot%202014-09-13%20at%2010.22.55%20PM.png)
+
 ## Usage
 
 - Go to `[DROPBOX_FOLDER]/Apps/[THE_APP_CREATED_IN_DROPBOX]`
@@ -27,7 +36,6 @@
 - Add a cover picture by naming a picture `_cover` and any extension you want.
 - Want password protection? Add a `password.txt` file. Content is the password.
 - Add pictures to the folder.
-- Flush memcached at `https://addons-sso.heroku.com/apps/[HEROKU_APP]/addons/memcachier`.
 - Enjoy!
 
 ## See it in action
