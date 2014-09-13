@@ -1,6 +1,6 @@
 require "json"
 
-class Instants < Sinatra::Base
+class Moments < Sinatra::Base
 
   ENV["MEMCACHE_SERVERS"]  = ENV["MEMCACHIER_SERVERS"] if ENV["MEMCACHIER_SERVERS"]
   ENV["MEMCACHE_USERNAME"] = ENV["MEMCACHIER_USERNAME"] if ENV["MEMCACHIER_USERNAME"]
@@ -15,9 +15,8 @@ class Instants < Sinatra::Base
 
   get '/' do
     cache_control :public, max_age: 3600
-    instants = dropbox_client.metadata("/")["contents"].sort_by {|e| e["client_mtime"] }
-    puts instants
-    erb :index, locals: { instants: instants }
+    moments = dropbox_client.metadata("/")["contents"].sort_by {|e| e["client_mtime"] }
+    erb :index, locals: { moments: moments }
   end
 
   get "/:path" do
@@ -25,7 +24,7 @@ class Instants < Sinatra::Base
     cache_control :public, max_age: 3600
     folder = dropbox_client.metadata("/#{params[:path]}", 25000, true, nil, nil, false, true)
     pictures = folder["contents"].select { |e| e["thumb_exists"] == true && !e["path"].match(/_cover\./)}
-    erb :instant, locals: { pictures: pictures }
+    erb :moment, locals: { pictures: pictures }
   end
 
   get "/thumbs/*" do

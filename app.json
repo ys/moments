@@ -1,13 +1,13 @@
 {
-  "name": "Instants",
-  "description": "A simple place for all your beautiful pictures. Over Dropbox",
+  "name": "Moments",
+  "description": "Share your best moments, quickly over dropbox.",
   "keywords": [
     "dropbox",
     "photography",
     "portfolio"
   ],
-  "website": "http://github.com/ys/instants",
-  "repository": "http://github.com/ys/instants",
+  "website": "http://github.com/ys/moments",
+  "repository": "http://github.com/ys/moments",
   "logo": "http://cl.ly/image/0X240K3e2B1A/logo.png",
   "scripts": {},
   "env": {

@@ -1,4 +1,4 @@
-# Instant portfolio over dropbox
+# Share your best moments, quickly over dropbox.
 
 ## Requirements
 
@@ -26,7 +26,7 @@
 - Add a cover picture by naming a picture `_cover` and any extension you want.
 - Want password protection? Add a `password.txt` file. Content is the password.
 - Add pictures to the folder.
-- Flush memcached at `https://addons-sso.heroku.com/apps/[HEROKU_APP]/addons/memcachier`
+- Flush memcached at `https://addons-sso.heroku.com/apps/[HEROKU_APP]/addons/memcachier`.
 - Enjoy!
 
 ## See it in action

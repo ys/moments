@@ -1,6 +1,6 @@
 require "bundler/setup"
 Bundler.require
-require_relative "./instants"
+require_relative "./moments"
 require 'dalli'
 
-Instants.run!
+Moments.run!
