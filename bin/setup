@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+set -o pipefail
+
+if [ -z "$DROPBOX_TOKEN" ]; then
+    echo "Missing DROPBOX_TOKEN, please read README.md" 1>&2; exit 1
+fi
+
+MOMENTS_EMOJI=${MOMENTS_EMOJI:-☃}
+MOMENTS_NAME=${MOMENTS_NAME:-Your name}
+echo "MOMENTS_EMOJI=$MOMENTS_EMOJI" >> .env
+echo "MOMENTS_NAME=$MOMENTS_NAME" >> .env
+echo "DROPBOX_TOKEN=$DROPBOX_TOKEN" >> .env
+
+bundle install
