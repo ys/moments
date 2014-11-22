@@ -42,5 +42,13 @@ This will clean the cache when you add new pictures or moments to your dropbox f
 
 [![](http://cl.ly/image/013226172504/Screen%20Shot%202014-09-11%20at%209.58.49%20AM.png)](https://moments.yannick.io)
 
+## Setup Locally
+
+- Clone the project
+- Run `bundle install`
+- Create a .env file at the root of the project
+- Add the `DROPBOX_TOKEN: 'yourtoken'` to the .env file
+- Start puma with `foreman start`
+- Visit your site at locahost:5000
 
 [1]: https://www.dropbox.com/developers/apps/create

@@ -1,51 +1,57 @@
-require "json"
+require 'json'
 
 class Moments < Sinatra::Base
 
-  ENV["MEMCACHE_SERVERS"]  = ENV["MEMCACHIER_SERVERS"] if ENV["MEMCACHIER_SERVERS"]
-  ENV["MEMCACHE_USERNAME"] = ENV["MEMCACHIER_USERNAME"] if ENV["MEMCACHIER_USERNAME"]
-  ENV["MEMCACHE_PASSWORD"] = ENV["MEMCACHIER_PASSWORD"] if ENV["MEMCACHIER_PASSWORD"]
+  configure :development do
+    require 'pry'
+  end
 
-  set :cache, Dalli::Client.new
+  configure :production do
+    ENV['MEMCACHE_SERVERS']  = ENV['MEMCACHIER_SERVERS'] if ENV['MEMCACHIER_SERVERS']
+    ENV['MEMCACHE_USERNAME'] = ENV['MEMCACHIER_USERNAME'] if ENV['MEMCACHIER_USERNAME']
+    ENV['MEMCACHE_PASSWORD'] = ENV['MEMCACHIER_PASSWORD'] if ENV['MEMCACHIER_PASSWORD']
 
-  use Rack::Cache,
-    verbose:     true,
-    metastore:   settings.cache,
-    entitystore: settings.cache
+    set :cache, Dalli::Client.new
+
+    use Rack::Cache,
+      verbose:     true,
+      metastore:   settings.cache,
+      entitystore: settings.cache
+  end
+  #
 
   get '/' do
-    cache_control :public, max_age: 3600
-    moments = dropbox_client.metadata("/")["contents"].sort_by {|e| e["client_mtime"] }
+    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
+    moments = dropbox_client.metadata('/')['contents'].sort_by {|e| e['client_mtime'] }
     erb :index, locals: { moments: moments }
   end
 
-  get "/:path" do
+  get '/:path' do
     authorize!
-    cache_control :public, max_age: 3600
+    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
     folder = dropbox_client.metadata("/#{params[:path]}", 25000, true, nil, nil, false, true)
-    pictures = folder["contents"].select { |e| e["thumb_exists"] == true && !e["path"].match(/_cover|password/)}
+    pictures = folder['contents'].select { |e| e['thumb_exists'] == true && !e['path'].match(/_cover|password/)}
     erb :moment, locals: { pictures: pictures }
   end
 
-  get "/thumbs/*" do
-    cache_control :public, max_age: 36000
-    t, metadata = dropbox_client.thumbnail_and_metadata("/#{params[:splat].first}", "xl")
-    content_type metadata["mime_type"]
+  get '/thumbs/*' do
+    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
+
+    t, metadata = dropbox_client.thumbnail_and_metadata("/#{params[:splat].first}", 'xl')
+    content_type metadata['mime_type']
     t
   end
 
-  get "/cache/flush" do
+  get '/cache/flush' do
     flush_cache
   end
 
-  post "/cache/flush" do
+  post '/cache/flush' do
     flush_cache
   end
 
   def flush_cache
-    if ENV["FLUSH_TOKEN"] != params[:t]
-      halt 401
-    end
+    halt 401 if ENV['FLUSH_TOKEN'] != params[:t]
     settings.cache.flush
     params[:challenge]
   end
@@ -61,22 +67,32 @@ class Moments < Sinatra::Base
   end
 
   def user_password
-    authorization.split(" ").last.unpack("m*").first
+    authorization.split(' ').last.unpack('m*').first
   end
 
   def authorization
-    env["HTTP_AUTHORIZATION"]
+    env['HTTP_AUTHORIZATION']
   end
 
   def password
-    settings.cache.get("#{params[:path]}/password") || fetch_and_cache_password
+    if settings.respond_to?('cache')
+      settings.cache.get("#{params[:path]}/password")
+    else
+      fetch_and_cache_password
+    end
   end
 
   def fetch_and_cache_password
-    puts env.inspect
-    dropbox_client.get_file("/#{params[:path]}/password.txt").strip
-      .tap {|p| settings.cache.set("#{params[:path]}/password", p) }
+    # puts env.inspect
+    psw = dropbox_client.get_file("/#{params[:path]}/password.txt").strip
+
+    if settings.respond_to?('cache')
+      psw.tap { |p| settings.cache.set("#{params[:path]}/password", p) }
+    end
+
+    psw
   rescue DropboxError => e
+    puts 'DropBox Password Error: ' + e.to_s
   end
 
   def unauthorized!
@@ -87,6 +103,6 @@ class Moments < Sinatra::Base
   end
 
   def dropbox_client
-    @dropbox_client ||= DropboxClient.new(ENV["DROPBOX_TOKEN"])
+    @dropbox_client ||= DropboxClient.new(ENV['DROPBOX_TOKEN'])
   end
 end
