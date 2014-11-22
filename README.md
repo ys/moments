@@ -22,7 +22,7 @@
 
 ### Dropbox Webhook
 
-This will clean the cache when you add new pictures or moments to your dropbox folder.  
+This will clean the cache when you add new pictures or moments to your dropbox folder.
 *You can do it manually via the settings of your app on heroku also but this is the* **recommended way**.
 
 - Get `FLUSH_TOKEN` via `$ heroku config`
@@ -44,11 +44,10 @@ This will clean the cache when you add new pictures or moments to your dropbox f
 
 ## Setup Locally
 
-- Clone the project
-- Run `bundle install`
-- Create a .env file at the root of the project
-- Add the `DROPBOX_TOKEN: 'yourtoken'` to the .env file
-- Start puma with `foreman start`
-- Visit your site at locahost:5000
+```bash
+DROPBOX_TOKEN=INSERT_TOKEN bin/setup
+foreman start
+open localhost:5000
+```
 
 [1]: https://www.dropbox.com/developers/apps/create
