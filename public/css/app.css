@@ -3,28 +3,31 @@ html {
 }
 body {
   margin:0; padding:0;
-  font: 16px 'Merriweather', serif;
+  font: 16px 'Source Sans Pro', Arial, sans-serif;
   border-top: 3px solid #79589F;
 }
 #snowman {
-  margin-top: 67px;
-  font-size: 4.188rem;
-  text-align: center;
+  margin: 0;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2rem;
   color: #79589F;
-  margin-bottom:0;
 }
 h1 {
   font-weight: normal;
-  font-size: 4.188rem;
-  line-height: 67px;
+  font-size: 2rem;
   text-align: center;
+  text-transform: uppercase;
   color: #666;
   margin: 0;
   margin-bottom: 37px;
+  margin-top: 37px;
 }
 
 h1 a:visited, h1 a:hover, h1 a {
   color: #666;
+  text-decoration: none;
 }
 
 p {
@@ -54,7 +57,7 @@ a:hover, a:visited {
 }
 
 .picture {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 footer {
@@ -64,4 +67,30 @@ footer {
   bottom: 10px;
   right: 10px;
   color: lightgray;
+}
+.container {
+  margin: 0 auto;
+}
+@media (min-width: 800px) {
+  .container {
+    width: 800px;
+  }
+  .picture img{
+    width: 800px;
+  }
+}
+@media (max-width: 1000px) {
+  footer {
+    margin: -10px;
+    padding: 20px;
+    background-color: white;
+  }
+}
+@media (max-width: 800px) {
+  .container {
+    width: 100%;
+  }
+  .picture img{
+    width: 100%;
+  }
 }
