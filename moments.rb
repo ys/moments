@@ -42,6 +42,11 @@ class Moments < Sinatra::Base
     t
   end
 
+  get '/custom.css' do
+    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
+    dropbox_client.get_file('custom.css')
+  end
+
   get '/cache/flush' do
     flush_cache
   end
