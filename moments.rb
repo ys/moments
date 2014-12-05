@@ -23,8 +23,13 @@ class Moments < Sinatra::Base
   get '/' do
     cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
     moments = dropbox_client.metadata('/')['contents'].select { |e| e['is_dir'] }.sort_by {|e| e['client_mtime'] }
-    puts moments.to_json
     erb :index, locals: { moments: moments }
+  end
+
+  get '/custom.css' do
+    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
+    content_type "text/css;charset=utf-8"
+    dropbox_client.get_file('/custom.css')
   end
 
   get '/:path' do
@@ -41,11 +46,6 @@ class Moments < Sinatra::Base
     t, metadata = dropbox_client.thumbnail_and_metadata("/#{params[:splat].first}", 'xl')
     content_type metadata['mime_type']
     t
-  end
-
-  get '/custom.css' do
-    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
-    dropbox_client.get_file('/custom.css')
   end
 
   get '/cache/flush' do
