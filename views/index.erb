@@ -1,7 +1,10 @@
+<div class="row text">
+  <%= text %>
+</div>
 <div class="row">
   <% moments.each do |moment| %>
     <div class="col-md-4 moment">
-      <a class="cover img-thumbnail" style="background: url(/thumbs<%= URI.escape(moment["path"]) %>/_cover.jpg) no-repeat center; " href="<%= moment["path"] %>"></a>
+      <a class="cover img-thumbnail" style="background: url(/t<%= URI.escape(moment["path"]) %>/_cover.jpg) no-repeat center; " href="/m/<%= moment["path"] %>"></a>
       <a class="cover-title" href="<%= moment["path"] %>"><%= moment["path"][1..-1] %></a>
     </div>
   <% end %>

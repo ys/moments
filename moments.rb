@@ -1,4 +1,14 @@
 require 'json'
+module MaRuKu
+  module Helpers
+    def md_im_image(children, url, title=nil, al=nil)
+      if url.start_with?('/')
+        url = "/t#{url}"
+      end
+      md_el(:im_image, children, { :url => url, :title => title }, al)
+    end
+  end
+end
 
 class Moments < Sinatra::Base
 
@@ -22,8 +32,9 @@ class Moments < Sinatra::Base
 
   get '/' do
     cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
-    moments = dropbox_client.metadata('/')['contents'].select { |e| e['is_dir'] }.sort_by {|e| e['client_mtime'] }
-    erb :index, locals: { moments: moments }
+    folder = folder('/')
+    moments = moments(folder)
+    erb :index, locals: { moments: moments, text: text(folder) }
   end
 
   get '/custom.css' do
@@ -32,15 +43,30 @@ class Moments < Sinatra::Base
     dropbox_client.get_file('/custom.css')
   end
 
-  get '/:path' do
-    authorize!
+  get '/b' do
     cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
-    folder = dropbox_client.metadata("/#{params[:path]}", 25000, true, nil, nil, false, true)
-    pictures = folder['contents'].select { |e| e['thumb_exists'] == true && !e['path'].match(/_cover|password/)}
-    erb :moment, locals: { pictures: pictures }
+    folder = folder("/_posts")
+    posts = folder['contents']
+    erb :posts, locals: { posts: posts }
   end
 
-  get '/thumbs/*' do
+  get '/b/:path' do
+    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
+    file = "/_posts/" + params[:path] + ".md"
+    text_content = dropbox_client.get_file(file)
+    text = Maruku.new(text_content).to_html
+    erb :post, locals: { text: text }
+  end
+
+  get '/m/:path' do
+    authorize!
+    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
+    folder = folder(params[:path])
+    pictures = folder['contents'].select { |e| is_a_picture?(e) }
+    erb :moment, locals: { pictures: pictures, text: text(folder) }
+  end
+
+  get '/t/*' do
     cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
 
     t, metadata = dropbox_client.thumbnail_and_metadata("/#{params[:splat].first}", 'xl')
@@ -54,6 +80,33 @@ class Moments < Sinatra::Base
 
   post '/cache/flush' do
     flush_cache
+  end
+
+  def is_a_picture?(file)
+    file['thumb_exists'] == true &&
+      !file['path'].match(/_cover|password/) &&
+      !file['path'].match(/index.md/)
+  end
+
+  def text(folder)
+    text_file = folder['contents'].detect { |e| e['path'].match(/index.md/)}
+    text = ''
+    if text_file
+      text_content = dropbox_client.get_file(text_file['path'])
+      text = Maruku.new(text_content).to_html
+    end
+    text
+  end
+
+  def moments(folder)
+    folder['contents'].
+      select { |e| e['is_dir'] }.
+      select { |e| ! e['path'].start_with?("/_posts")}.
+      sort_by {|e| e['client_mtime'] }
+  end
+
+  def folder(path)
+    dropbox_client.metadata("/#{path}", 25000, true, nil, nil, false, true)
   end
 
   def flush_cache
