@@ -101,8 +101,7 @@ class Moments < Sinatra::Base
   def moments(folder)
     folder['contents'].
       select { |e| e['is_dir'] }.
-      select { |e| ! e['path'].start_with?("/_posts")}.
-      sort_by {|e| e['modified'] }
+      select { |e| ! e['path'].start_with?("/_posts")}
   end
 
   def folder(path)
