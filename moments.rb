@@ -32,9 +32,8 @@ class Moments < Sinatra::Base
 
   get '/' do
     cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
-    folder = folder('/')
-    moments = moments(folder)
-    erb :index, locals: { moments: moments, text: text(folder) }
+    folder = folder("/")
+    erb :index, locals: { moments: moments["moments"], text: text(folder) }
   end
 
   get '/custom.css' do
@@ -61,7 +60,8 @@ class Moments < Sinatra::Base
   get '/m/:path' do
     authorize!
     cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
-    folder = folder(params[:path])
+    moment = moments["moments"].detect{|e| e["slug"] == params[:path] }
+    folder = folder(moment["path"])
     pictures = folder['contents'].select { |e| is_a_picture?(e) }
     erb :moment, locals: { pictures: pictures, text: text(folder) }
   end
@@ -98,10 +98,9 @@ class Moments < Sinatra::Base
     text
   end
 
-  def moments(folder)
-    folder['contents'].
-      select { |e| e['is_dir'] }.
-      select { |e| ! e['path'].start_with?("/_posts")}
+  def moments
+    content = dropbox_client.get_file('/index.json')
+    JSON.parse(content)
   end
 
   def folder(path)
