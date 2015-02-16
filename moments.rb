@@ -46,16 +46,16 @@ class Moments < Sinatra::Base
   get '/b' do
     cache_control :public, max_age: 3600
     folder = folder("/_posts")
-    posts = folder['contents']
     erb :posts, locals: { posts: posts }
   end
 
   get '/b/:path' do
-    file = "/_posts/" + params[:path] + ".md"
     cache_control :public, max_age: 3600
+    file = posts.detect{ |p| p['slug'] == params[:path] }["path"]
     text_content = dropbox_client.get_file(file)
-    text = Maruku.new(text_content).to_html
-    erb :post, locals: { text: text }
+    metadata = YAML.load(text_content)
+    text = Maruku.new(text_content.sub(/^---\n(.*\n)*---\n/, '')).to_html
+    erb :post, locals: { text: text, metadata: metadata }
   end
 
   get '/m/:path' do
@@ -99,9 +99,36 @@ class Moments < Sinatra::Base
     text
   end
 
+  def file(path)
+    dropbox_client.get_file(path)
+  end
+
   def moments
     content = dropbox_client.get_file('/index.yml')
     YAML.load(content)
+  end
+
+  def posts
+    if settings.respond_to?(:cache)
+      if @posts = settings.cache.get("_posts")
+        @posts = YAML.load(@posts)
+      else
+        posts = get_posts
+        settings.cache.set("_posts", YAML.dump(posts))
+        @posts = posts
+      end
+    else
+      get_posts
+    end
+  end
+
+  def get_posts
+    folder("_posts")["contents"].map do |f|
+      content = file(f['path'])
+      data = YAML.load(content)
+      data['path'] = f['path']
+      data
+    end.sort_by{|p| - Date.parse(p["date"]).to_time.to_i }
   end
 
   def folder(path)
