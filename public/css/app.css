@@ -108,3 +108,15 @@ li .date {
   color: #cecece;
   font-size: 12px;
 }
+
+.post header {
+  margin-bottom: 30px;
+}
+
+.post header h1 {
+  margin-bottom: 10px;
+}
+
+.post .date {
+  color: #cecece;
+}
