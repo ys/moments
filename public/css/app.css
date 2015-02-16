@@ -90,3 +90,21 @@ footer {
     width: 100%;
   }
 }
+
+li {
+  list-style-type: none;
+  border-bottom: solid 1px #cecece;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+li a {
+  text-decoration: none;
+}
+
+li .date {
+  float: right;
+  color: #cecece;
+  font-size: 12px;
+}
