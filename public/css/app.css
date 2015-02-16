@@ -61,7 +61,7 @@ a:hover, a:visited {
 }
 
 .text img {
-  max-width: 800px;
+  max-width: 1024px;
 }
 
 footer {
@@ -75,12 +75,12 @@ footer {
 .container {
   margin: 0 auto;
 }
-@media (min-width: 800px) {
+@media (min-width: 1024px) {
   .container {
-    width: 800px;
+    width: 1024px;
   }
   .picture img{
-    width: 800px;
+    width: 1024px;
   }
 }
 @media (max-width: 1000px) {
@@ -90,7 +90,7 @@ footer {
     background-color: white;
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 1024px) {
   .container {
     width: 100%;
   }
