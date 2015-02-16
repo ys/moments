@@ -11,9 +11,9 @@
   </head>
 
   <body>
-    <p id="snowman"><%= ENV["MOMENTS_EMOJI"] %></p>
     <div class="container">
-      <h1><a href="/"><%= ENV["MOMENTS_NAME"] || "Moments" %></a></h1>
+      <h1><a href="/"><span id="snowman"><%= ENV["MOMENTS_EMOJI"] %></span><%= ENV["MOMENTS_NAME"] || "Moments" %></a></h1>
+
       <%= yield %>
     </div>
     <footer>Made with <a href="https://github.com/ys/moments">Moments</a></footer>

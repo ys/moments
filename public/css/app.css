@@ -8,9 +8,6 @@ body {
 }
 #snowman {
   margin: 0;
-  position: absolute;
-  top: 20px;
-  left: 20px;
   font-size: 2rem;
   color: #79589F;
 }
