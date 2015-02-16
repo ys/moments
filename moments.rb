@@ -30,30 +30,29 @@ class Moments < Sinatra::Base
       metastore:   settings.cache,
       entitystore: settings.cache
   end
-  #
 
   get '/' do
-    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
+    cache_control :public, max_age: 3600
     folder = folder("/")
     erb :index, locals: { moments: moments["moments"], text: text(folder) }
   end
 
   get '/custom.css' do
-    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
+    cache_control :public, max_age: 3600
     content_type "text/css;charset=utf-8"
     dropbox_client.get_file('/custom.css')
   end
 
   get '/b' do
-    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
+    cache_control :public, max_age: 3600
     folder = folder("/_posts")
     posts = folder['contents']
     erb :posts, locals: { posts: posts }
   end
 
   get '/b/:path' do
-    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
     file = "/_posts/" + params[:path] + ".md"
+    cache_control :public, max_age: 3600
     text_content = dropbox_client.get_file(file)
     text = Maruku.new(text_content).to_html
     erb :post, locals: { text: text }
@@ -61,7 +60,7 @@ class Moments < Sinatra::Base
 
   get '/m/:path' do
     authorize!
-    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
+    cache_control :public, max_age: 3600
     moment = moments["moments"].detect{|e| e["slug"] == params[:path] }
     folder = folder(moment["path"])
     pictures = folder['contents'].select { |e| is_a_picture?(e) }
@@ -69,7 +68,7 @@ class Moments < Sinatra::Base
   end
 
   get '/t/*' do
-    cache_control :public, max_age: 3600 if ENV['RACK_ENV'] == :production
+    cache_control :public, max_age: 3600
 
     t, metadata = dropbox_client.thumbnail_and_metadata("/#{params[:splat].first}", 'xl')
     content_type metadata['mime_type']
