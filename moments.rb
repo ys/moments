@@ -1,4 +1,6 @@
 require 'json'
+require 'yaml'
+
 module MaRuKu
   module Helpers
     def md_im_image(children, url, title=nil, al=nil)
@@ -99,8 +101,8 @@ class Moments < Sinatra::Base
   end
 
   def moments
-    content = dropbox_client.get_file('/index.json')
-    JSON.parse(content)
+    content = dropbox_client.get_file('/index.yml')
+    YAML.load(content)
   end
 
   def folder(path)
