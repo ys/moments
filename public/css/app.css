@@ -52,10 +52,9 @@ a:hover, a:visited {
   margin-bottom: 20px;
 }
 
-.text img {
-  max-width: 1024px;
+.post img {
+  max-width: 700px;
 }
-
 .post {
   width: 700px;
   margin: 0 auto;
@@ -77,12 +76,17 @@ footer {
 .container {
   margin: 0 auto;
 }
-@media (min-width: 1024px) {
+
+.index {
+  font-family: Garamond;
+}
+
+@media (min-width: 700px) {
   .container {
-    width: 1024px;
+    width: 700px;
   }
   .picture img{
-    width: 1024px;
+    width: 700px;
   }
 }
 @media (max-width: 1000px) {
@@ -92,13 +96,17 @@ footer {
     background-color: white;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 700px) {
   .container {
     width: 100%;
   }
   .picture img{
     width: 100%;
   }
+}
+
+.container > ul {
+  padding-left: 0;
 }
 
 li {
