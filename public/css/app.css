@@ -3,7 +3,7 @@ html {
 }
 body {
   margin:0; padding:0;
-  font: 16px 'Source Sans Pro', Arial, sans-serif;
+  font: 22px 'Source Sans Pro', Arial, sans-serif;
   border-top: 3px solid #79589F;
 }
 #snowman {
@@ -54,6 +54,16 @@ a:hover, a:visited {
 
 .text img {
   max-width: 1024px;
+}
+
+.post {
+  width: 700px;
+  margin: 0 auto;
+}
+
+p {
+  font-family: Garamond;
+  line-height: 1.5;
 }
 
 footer {
