@@ -3,8 +3,11 @@ html {
 }
 body {
   margin:0; padding:0;
-  font: 22px 'Source Sans Pro', Arial, sans-serif;
+  font: 19px 'Source Sans Pro', Arial, sans-serif;
   border-top: 3px solid #79589F;
+}
+header.main h1 {
+  font-size: 2rem;
 }
 #snowman {
   margin: 0;
@@ -13,7 +16,7 @@ body {
 }
 h1 {
   font-weight: normal;
-  font-size: 2rem;
+  font-size: 3rem;
   text-transform: uppercase;
   color: #666;
   margin: 0;
@@ -24,6 +27,11 @@ h1 {
 h1 a:visited, h1 a:hover, h1 a {
   color: #666;
   text-decoration: none;
+}
+
+h2 {
+  font-size: 1.7rem;
+  text-transform: uppercase;
 }
 
 a {
@@ -61,8 +69,9 @@ a:hover, a:visited {
 }
 
 p {
-  font-family: Garamond;
-  line-height: 1.5;
+  font-family: Merriweather;
+  line-height: 1.7;
+  font-weight: 300;
 }
 
 footer {
@@ -78,7 +87,8 @@ footer {
 }
 
 .index {
-  font-family: Garamond;
+  font-family: Merriweather;
+  font-weight: 300;
 }
 
 @media (min-width: 700px) {
@@ -123,7 +133,9 @@ li a {
 
 li .date {
   float: right;
-  color: #cecece;
+  color: #dedede;
+  letter-spacing: 3px;
+  margin-top: 7px;
   font-size: 12px;
 }
 
@@ -136,5 +148,6 @@ li .date {
 }
 
 .post .date {
-  color: #cecece;
-}
+  color: #dedede;
+  letter-spacing: 3px;
+7}

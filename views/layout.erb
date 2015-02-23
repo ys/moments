@@ -5,6 +5,7 @@
     <title><%= ENV["MOMENTS_NAME"] || "Moments" %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,400italic,300italic,300,700,700italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/app.css" type="text/css" />
     <link rel="stylesheet" href="/custom.css" type="text/css" />
 
@@ -12,7 +13,9 @@
 
   <body>
     <div class="container">
-      <h1><a href="/"><span id="snowman"><%= ENV["MOMENTS_EMOJI"] %></span><%= ENV["MOMENTS_NAME"] || "Moments" %></a></h1>
+      <header class="main">
+        <h1><a href="/"><span id="snowman"><%= ENV["MOMENTS_EMOJI"] %></span><%= ENV["MOMENTS_NAME"] || "Moments" %></a></h1>
+      </header>
 
       <%= yield %>
     </div>
