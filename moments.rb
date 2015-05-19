@@ -35,14 +35,14 @@ class Moments < Sinatra::Base
     cache_control :public, max_age: 3600
     text_content = dropbox_client.get_file("/index.md")
     text = Maruku.new(text_content.sub(/^---\n(.*\n)*---\n/, '')).to_html
-    erb :index, locals: { text: text }
+    erb :index, locals: { text: text , main_class: 'home'}
   end
 
   get '/m' do
     cache_control :public, max_age: 3600
     folder = folder("/")
     etag folder["modified_at"]
-    erb :moments, locals: { moments: moments["moments"] }
+    erb :moments, locals: { moments: moments["moments"], main_class: 'moments'}
   end
 
   get '/custom.css' do
@@ -54,7 +54,7 @@ class Moments < Sinatra::Base
   get '/b' do
     cache_control :public, max_age: 3600
     folder = folder("/_posts")
-    erb :posts, locals: { posts: posts }
+    erb :posts, locals: { posts: posts, main_class: 'posts' }
   end
 
   get '/b/:path' do
@@ -63,7 +63,7 @@ class Moments < Sinatra::Base
     text_content = dropbox_client.get_file(file)
     metadata = YAML.load(text_content)
     text = Maruku.new(text_content.sub(/^---\n(.*\n)*---\n/, '')).to_html
-    erb :post, locals: { text: text, metadata: metadata }
+    erb :post, locals: { text: text, metadata: metadata, main_class: 'post'}
   end
 
   get '/m/:path' do
@@ -72,7 +72,7 @@ class Moments < Sinatra::Base
     moment = moments["moments"].detect{|e| e["slug"] == params[:path] }
     folder = folder(moment["path"])
     pictures = folder['contents'].select { |e| is_a_picture?(e) }
-    erb :moment, locals: { pictures: pictures, text: text(folder) }
+    erb :moment, locals: { pictures: pictures, text: text(folder), main_class: 'moment' }
   end
 
   get '/t/*' do
