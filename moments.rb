@@ -62,7 +62,7 @@ class Moments < Sinatra::Base
     file = posts.detect{ |p| p['slug'] == params[:path] }["path"]
     text_content = dropbox_client.get_file(file)
     metadata = YAML.load(text_content)
-    text = Kramdown::Document.new(text_content.sub(/^---\n(.*\n)*---\n/, '')).to_html
+    text = Kramdown::Document.new(text_content.force_encoding("UTF-8").sub(/^---\n(.*\n)*---\n/, '')).to_html
     erb :post, locals: { text: text, metadata: metadata, main_class: 'post'}
   end
 
