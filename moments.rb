@@ -34,7 +34,7 @@ class Moments < Sinatra::Base
   get '/' do
     cache_control :public, max_age: 3600
     text_content = dropbox_client.get_file("/index.md")
-    text = Maruku.new(text_content.sub(/^---\n(.*\n)*---\n/, '')).to_html
+    text = Kramdown::Document.new(text_content.sub(/^---\n(.*\n)*---\n/, '')).to_html
     erb :index, locals: { text: text , main_class: 'home'}
   end
 
@@ -62,7 +62,7 @@ class Moments < Sinatra::Base
     file = posts.detect{ |p| p['slug'] == params[:path] }["path"]
     text_content = dropbox_client.get_file(file)
     metadata = YAML.load(text_content)
-    text = Maruku.new(text_content.sub(/^---\n(.*\n)*---\n/, '')).to_html
+    text = Kramdown::Document.new(text_content.sub(/^---\n(.*\n)*---\n/, '')).to_html
     erb :post, locals: { text: text, metadata: metadata, main_class: 'post'}
   end
 
@@ -102,7 +102,7 @@ class Moments < Sinatra::Base
     text = ''
     if text_file
       text_content = dropbox_client.get_file(text_file['path'])
-      text = Maruku.new(text_content).to_html
+      text = Kramdown::Document.new(text_content).to_html
     end
     text
   end
