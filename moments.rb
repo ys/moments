@@ -34,7 +34,7 @@ class Moments < Sinatra::Base
   get '/' do
     cache_control :public, max_age: 3600
     text_content = dropbox_client.get_file("/index.md")
-    text = Kramdown::Document.new(text_content.sub(/^---\n(.*\n)*---\n/, '')).to_html
+    text = Kramdown::Document.new(text_content.force_encoding("UTF-8").sub(/^---\n(.*\n)*---\n/, '')).to_html
     erb :index, locals: { text: text , main_class: 'home'}
   end
 
@@ -102,7 +102,7 @@ class Moments < Sinatra::Base
     text = ''
     if text_file
       text_content = dropbox_client.get_file(text_file['path'])
-      text = Kramdown::Document.new(text_content).to_html
+      text = Kramdown::Document.new(text_content.force_encoding("UTF-8")).to_html
     end
     text
   end
