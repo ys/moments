@@ -58,10 +58,21 @@ a:hover, a:visited {
   display: block;
   color: #666;
   margin-top: 16px;
+  font-weight: normal;
+  text-align: center;
+  font: 18px 'Cutive Mono', serif;
+  text-decoration: none;
 }
 
 .moment {
   margin-bottom: 37px;
+}
+
+.moment h2 {
+  font-family: 'Cutive Mono', serif;
+  text-decoration: none;
+  font-weight: normal;
+  text-align: center;
 }
 
 .picture {
@@ -125,7 +136,7 @@ footer {
   }
 }
 @media (max-width: 700px) {
-  .container {
+  .container, body, .container .row {
     width: 100%;
   }
   .picture img{

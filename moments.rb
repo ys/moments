@@ -72,7 +72,7 @@ class Moments < Sinatra::Base
     moment = moments.detect{|e| e["slug"] == params[:path] }
     folder = folder(moment["path"])
     pictures = folder['contents'].select { |e| is_a_picture?(e) }
-    erb :moment, locals: { pictures: pictures, text: text(folder), main_class: 'moment' }
+    erb :moment, locals: { moment: moment, pictures: pictures, text: text(folder), main_class: 'moment' }
   end
 
   get '/t/*' do
@@ -112,17 +112,25 @@ class Moments < Sinatra::Base
   end
 
   def moments
-    folder("/")["contents"].reject do |f|
+    folder("/")["contents"]
+    .reject do |f|
       f["is_dir"] == false ||
       f["path"].start_with?("/_") ||
       f["path"] == "/assets"
     end.map do |f|
+      m_alias = moments_aliases[f["path"][1..-1]] || {}
       {
-        "title" => f["path"][1..-1],
-        "slug" =>  URI.escape(f["path"][1..-1].downcase.gsub(" ", "_")),
+        "title" => m_alias["title"] || f["path"][1..-1],
+        "slug" =>  m_alias["slug"]  || URI.escape(f["path"][1..-1].downcase.gsub(" ", "_")),
         "path" =>  f["path"],
       }
     end
+  end
+
+  def moments_aliases
+    @aliases ||= YAML.load(file("/moments.yml"))
+  rescue
+    ""
   end
 
   def posts

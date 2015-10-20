@@ -2,7 +2,9 @@
   <% moments.each do |moment| %>
     <div class="col-md-4 moment">
       <a class="cover img-thumbnail" style="background: url(/t<%= URI.escape(moment["path"]) %>/_cover.jpg) no-repeat center; " href="/m/<%= moment["slug"] %>"></a>
-      <a class="cover-title" href="/m/<%= moment["slug"] %>"><%= moment["title"] %></a>
+      <h2>
+        <a class="cover-title" href="/m/<%= moment["slug"] %>"><%= moment["title"] %></a>
+      </h2>
     </div>
   <% end %>
 </div>
