@@ -16,7 +16,7 @@
 ![](http://cl.ly/image/01461w1z1K37/Artboard.png)
 
 ### Heroku
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/ys/moments/tree/master)
 
 *Use the token generated in the dropbox part in setup*
 
