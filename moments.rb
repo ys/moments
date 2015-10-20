@@ -42,7 +42,7 @@ class Moments < Sinatra::Base
     cache_control :public, max_age: 3600
     folder = folder("/")
     etag folder["modified_at"]
-    erb :moments, locals: { moments: moments["moments"], main_class: 'moments'}
+    erb :moments, locals: { moments: moments, main_class: 'moments'}
   end
 
   get '/custom.css' do
@@ -69,7 +69,7 @@ class Moments < Sinatra::Base
   get '/m/:path' do
     authorize!
     cache_control :public, max_age: 3600
-    moment = moments["moments"].detect{|e| e["slug"] == params[:path] }
+    moment = moments.detect{|e| e["slug"] == params[:path] }
     folder = folder(moment["path"])
     pictures = folder['contents'].select { |e| is_a_picture?(e) }
     erb :moment, locals: { pictures: pictures, text: text(folder), main_class: 'moment' }
@@ -112,8 +112,17 @@ class Moments < Sinatra::Base
   end
 
   def moments
-    content = dropbox_client.get_file('/index.yml')
-    YAML.load(content)
+    folder("/")["contents"].reject do |f|
+      f["is_dir"] == false ||
+      f["path"].start_with?("/_") ||
+      f["path"] == "/assets"
+    end.map do |f|
+      {
+        "title" => f["path"][1..-1],
+        "slug" =>  URI.escape(f["path"][1..-1].downcase.gsub(" ", "_")),
+        "path" =>  f["path"],
+      }
+    end
   end
 
   def posts
