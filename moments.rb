@@ -91,6 +91,14 @@ class Moments < Sinatra::Base
     flush_cache
   end
 
+  get '/:path' do
+    cache_control :public, max_age: 3600
+    path = params[:path].split(".")[0].split("/")[0]
+    text_content = dropbox_client.get_file("/#{path}.md")
+    text = Kramdown::Document.new(text_content.force_encoding("UTF-8").sub(/^---\n(.*\n)*---\n/, '')).to_html
+    erb :index, locals: { text: text , main_class: 'home'}
+  end
+
   def is_a_picture?(file)
     file['thumb_exists'] == true &&
       !file['path'].match(/_cover|password/) &&
