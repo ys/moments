@@ -96,7 +96,7 @@ class Moments < Sinatra::Base
     path = params[:path].split(".")[0].split("/")[0]
     text_content = dropbox_client.get_file("/#{path}.md")
     text = Kramdown::Document.new(text_content.force_encoding("UTF-8").sub(/^---\n(.*\n)*---\n/, '')).to_html
-    erb :index, locals: { text: text , main_class: 'home'}
+    erb :index, locals: { text: text , main_class: path}
   end
 
   def is_a_picture?(file)
