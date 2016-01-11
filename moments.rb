@@ -1,16 +1,7 @@
 require 'json'
 require 'yaml'
 
-module MaRuKu
-  module Helpers
-    def md_im_image(children, url, title=nil, al=nil)
-      if url.start_with?('/')
-        url = "/t#{url}"
-      end
-      md_el(:im_image, children, { :url => url, :title => title }, al)
-    end
   end
-end
 
 class Moments < Sinatra::Base
 
