@@ -1,7 +1,7 @@
 <div class="row post text">
   <header>
-    <h1><%= metadata["title"] %></h1>
-    <span class=date><%= metadata["date"] %></span>
+    <h1><%= post.title %></h1>
+    <span class=date><%= post.created_at %></span>
   </header>
-  <%= text %>
+  <%= post.to_html %>
 </div>

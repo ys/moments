@@ -1,9 +1,9 @@
 <div class="row post text">
-  <h2><%= moment["title"] %></h2>
-  <%= text %>
+  <h2><%= moment.title %></h2>
+  <%= moment.text %>
 </div>
-<% pictures.each do |picture| %>
+<% moment.pictures.each do |picture| %>
   <div class="row picture">
-    <img class="col-md-8  col-md-offset-2 col-xs-12 col-sm-12" src="/t<%= picture["path"] %>"/>
+    <img class="col-md-8  col-md-offset-2 col-xs-12 col-sm-12" src="/t<%= picture.path %>"/>
   </div>
 <% end %>

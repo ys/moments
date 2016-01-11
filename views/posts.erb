@@ -1,5 +1,5 @@
 <ul>
   <% posts.each do |post| %>
-    <li><a href="/b/<%= post["slug"] %>"><%= post["title"] %></a><span class=date><%= post["date"] %></span></li>
+    <li><a href="/b/<%= post.slug %>"><%= post.title %></a><span class=date><%= post.created_at %></span></li>
   <% end %>
 </ul>

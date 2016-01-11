@@ -6,4 +6,4 @@ require "yaml"
 require_relative "maruku_helpers"
 require_relative "moments"
 
-Moments.run!
+MomentsApp.run!
