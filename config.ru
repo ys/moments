@@ -3,16 +3,27 @@ Bundler.require
 require "dalli"
 require "json"
 require "yaml"
-require_relative "maruku_helpers"
+
+module Setup
+  def self.require_glob(path)
+		Dir[path].each {|file|
+			require file
+		}
+	end
+
+  def self.require!(globs)
+		Array(globs).each do |f|
+      require_glob("./#{f}.rb")
+		end
+	end
+end
+
+Setup.require! %w{config/**/*}
+require_relative "config/maruku_helpers"
 require_relative "lib/dropbox_base"
 require_relative "lib/dropbox_file"
 require_relative "lib/dropbox_folder"
-require_relative "lib/index"
-require_relative "lib/moments"
-require_relative "lib/posts"
-require_relative "lib/moment"
-require_relative "lib/post"
-require_relative "lib/picture"
+Setup.require! %w{lib/**/*}
 require_relative "moments_app"
 
 MomentsApp.run!
