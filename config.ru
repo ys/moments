@@ -3,6 +3,7 @@ Bundler.require
 require "dalli"
 require "json"
 require "yaml"
+require "rack/ssl-enforcer"
 
 module Setup
   def self.require_glob(path)
