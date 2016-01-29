@@ -23,7 +23,13 @@ require_relative "config/maruku_helpers"
 require_relative "lib/dropbox_base"
 require_relative "lib/dropbox_file"
 require_relative "lib/dropbox_folder"
+require_relative "lib/endpoints/base"
 Setup.require! %w{lib/**/*}
-require_relative "moments_app"
 
-MomentsApp.run!
+use Sinatra::Router do
+  mount Endpoints::Pictures
+  mount Endpoints::Posts
+  mount Endpoints::Root
+  mount Endpoints::CatchAll
+end
+run Sinatra::Application
