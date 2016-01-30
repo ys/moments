@@ -31,6 +31,7 @@ use Sinatra::Router do
   mount Endpoints::Pictures
   mount Endpoints::Posts
   mount Endpoints::Root
+  mount Endpoints::Redirections
   mount Endpoints::CatchAll
 end
 run Sinatra::Application
