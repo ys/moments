@@ -58,6 +58,7 @@ module Endpoints
 
     def fetch_and_cache_password
       psw = DropboxFile.new("/#{params[:path]}/passwd").content
+      return nil if psw == ""
       if settings.respond_to?("cache")
         settings.cache.set("#{params[:path]}/password", p)
       end
