@@ -5,24 +5,22 @@ module Endpoints
         pictures_index
       end
 
+      get "/custom.css" do
+        cache_control :public, max_age: 3600
+        content_type "text/css;charset=utf-8"
+        DropboxFile.new("/custom.css").content
+      end
+
       get "/:path" do
         pictures_page(params[:path])
       end
-    end
 
-    get "/m" do
-      pictures_index
-    end
-
-    get "/m/:path" do
-      pictures_page(params[:path])
-    end
-
-    get "/t/*" do
-      cache_control :public, max_age: 3600
-      p = Picture.new("/#{params[:splat].first}")
-      content_type p.mime_type
-      p.content
+      get "/t/*" do
+        cache_control :public, max_age: 3600
+        p = Picture.new("/#{params[:splat].first}")
+        content_type p.mime_type
+        p.content
+      end
     end
 
     def pictures_page(path)
