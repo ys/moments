@@ -20,6 +20,14 @@ class DropboxBase
   end
 
   def self.client
-    @client ||= DropboxClient.new(ENV["DROPBOX_TOKEN"])
+    @client ||= get_client
+  end
+
+  def self.get_client
+    if ENV["OFFLINE"]
+      OfflineDropboxClient.new
+    else
+      DropboxClient.new(ENV["DROPBOX_TOKEN"])
+    end
   end
 end
