@@ -6,20 +6,24 @@ body {
   font: 18px 'Cutive Mono', serif;
   border-top: 5px solid #79589F;
 }
+
 h1, h2, h3, h4, .date {
   font-family: 'Source Sans Pro', Arial, sans-serif;
 }
+
 header.main h1 {
   font-size: 1rem;
   font-weight: 400;
   letter-spacing: 2px;
   text-align: center;
 }
+
 #snowman {
   margin: 0;
   font-size: 2rem;
   color: #79589F;
 }
+
 h1 {
   font-weight: normal;
   font-size: 3rem;
@@ -44,9 +48,11 @@ h2 {
 a {
   color: black;
 }
+
 a:hover, a:visited {
   color: #79589F;
 }
+
 .cover {
   background-color: lightgray;
   background-size: cover !important;
@@ -128,6 +134,7 @@ footer {
     width: 700px;
   }
 }
+
 @media (max-width: 1000px) {
   footer {
     margin: -10px;
@@ -135,6 +142,7 @@ footer {
     background-color: white;
   }
 }
+
 @media (max-width: 700px) {
   .container, body, .container .row {
     width: 100%;
@@ -184,10 +192,12 @@ li .date {
 .home.container {
   width: 100%;
 }
+
 .home.container .wrap {
   height: 400px;
   overflow: hidden;
 }
+
 .home.container .wrap img {
   width: 100%;
 }

@@ -12,7 +12,6 @@ class Picture < DropboxFile
 
   def mime_type
     @metadata["mime_type"]
-
   end
 
   def _load
