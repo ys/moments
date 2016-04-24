@@ -4,6 +4,7 @@ require "dalli"
 require "json"
 require "yaml"
 require "rack/ssl-enforcer"
+require "metamagic"
 
 module Setup
   def self.require_glob(path)

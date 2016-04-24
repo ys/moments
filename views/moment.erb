@@ -8,7 +8,9 @@ meta og: {
       title: moment.title,
       description: moment.text,
       image: "#{ENV["APP_URL"]}/t/#{URI.escape(moment.path)}/_cover.jpg"
-    }
+    },
+    title: moment.title,
+    description: moment.text
 %>
 <div class="row post text">
   <h2><%= moment.title %></h2>
