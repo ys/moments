@@ -2,16 +2,18 @@
   <meta property="og:title" content="<%= moment.title %>" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="<%= "#{ENV["APP_URL"]}/t/#{URI.escape(moment.path)}/_cover.jpg" %>" />
-  <meta property="twitter:title" content="<%= moment.title %>" />
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:site" content="@<%= ENV["TWITTER_HANDLE"] %>" />
-  <meta property="twitter:image" content="<%= "#{ENV["APP_URL"]}/t/#{URI.escape(moment.path)}/_cover.jpg" %>" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="<%= moment.title %>" />
+  <meta name="twitter:site" content="@<%= ENV["TWITTER_HANDLE"] %>" />
+  <meta name="twitter:image" content="<%= "#{ENV["APP_URL"]}/t/#{URI.escape(moment.path)}/_cover.jpg" %>" />
   <% if moment.text != "" %>
-    <meta property="twitter:description" content="<%= moment.text %>" />
+    <meta name="twitter:description" content="<%= moment.text %>" />
+    <meta property="og:description" content="<%= moment.text %>" />
     <meta name="description" content="<%= moment.text %>" />
   <% else %>
-    <meta property="twitter:description" content="A moment shared with you." />
-    <meta name="description" content="A moment shared with you" />
+    <meta name="twitter:description" content="A moment shared with you." />
+    <meta property="og:description" content="A moment shared with you." />
+    <meta name="description" content="A moment shared with you." />
   <% end %>
 <% end %>
 <div class="row post text">
