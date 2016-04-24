@@ -1,3 +1,5 @@
+require "sinatra/content_for"
+
 module Endpoints
   class Base < Sinatra::Base
 
@@ -5,6 +7,7 @@ module Endpoints
     set :views, Proc.new { File.join(root , "views") }
 
     register Sinatra::Subdomain
+    helpers Sinatra::ContentFor
 
     configure :development do
       require "pry"

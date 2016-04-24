@@ -1,17 +1,13 @@
-<%
-meta og: {
-      image: "#{ENV["APP_URL"]}/t/#{URI.escape(moment.path)}/_cover.jpg"
-    },
-    twitter: {
-      card: "summary_large_image",
-      site: "@#{ENV["TWITTER_HANDLE"]}",
-      title: moment.title,
-      description: moment.text,
-      image: "#{ENV["APP_URL"]}/t/#{URI.escape(moment.path)}/_cover.jpg"
-    },
-    title: moment.title,
-    description: moment.text
-%>
+<% content_for :custom_head do %>
+  <meta property="og:title" content="<%= moment.title %>" />
+  <meta property="og:image" content="<%= "#{ENV["APP_URL"]}/t/#{URI.escape(moment.path)}/_cover.jpg" %>" />
+  <meta property="twitter:title" content="<%= moment.title %>" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:site" content="@<%= ENV["TWITTER_HANDLE"] %>" />
+  <meta property="twitter:description" content="<%= moment.text %>" />
+  <meta property="twitter:image" content="<%= "#{ENV["APP_URL"]}/t/#{URI.escape(moment.path)}/_cover.jpg" %>" />
+  <meta name="description" content="<%= moment.text %>" />
+<% end %>
 <div class="row post text">
   <h2><%= moment.title %></h2>
   <%= moment.text %>
