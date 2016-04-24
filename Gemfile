@@ -11,6 +11,7 @@ gem "dropbox-sdk", require: "dropbox_sdk"
 gem "sinatra-router"
 gem "sinatra-subdomain"
 gem "rack-ssl-enforcer"
+gem "metamagic"
 
 group :development do
   gem "foreman"
