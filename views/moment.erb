@@ -4,9 +4,14 @@
   <meta property="twitter:title" content="<%= moment.title %>" />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:site" content="@<%= ENV["TWITTER_HANDLE"] %>" />
-  <meta property="twitter:description" content="<%= moment.text %>" />
   <meta property="twitter:image" content="<%= "#{ENV["APP_URL"]}/t/#{URI.escape(moment.path)}/_cover.jpg" %>" />
-  <meta name="description" content="<%= moment.text %>" />
+  <% if moment.text != "" %>
+    <meta property="twitter:description" content="<%= moment.text %>" />
+    <meta name="description" content="<%= moment.text %>" />
+  <% else %>
+    <meta property="twitter:description" content="A moment shared with you." />
+    <meta name="description" content="A moment shared with you" />
+  <% end %>
 <% end %>
 <div class="row post text">
   <h2><%= moment.title %></h2>
