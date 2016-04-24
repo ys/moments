@@ -1,5 +1,6 @@
 <% content_for :custom_head do %>
   <meta property="og:title" content="<%= moment.title %>" />
+  <meta property="og:type" content="website" />
   <meta property="og:image" content="<%= "#{ENV["APP_URL"]}/t/#{URI.escape(moment.path)}/_cover.jpg" %>" />
   <meta property="twitter:title" content="<%= moment.title %>" />
   <meta property="twitter:card" content="summary_large_image" />
