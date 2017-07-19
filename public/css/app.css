@@ -3,7 +3,7 @@ html {
 }
 body {
   margin:0; padding:0;
-  font: 18px 'Cutive Mono', serif;
+  font: 18px 'Cousine', serif;
   border-top: 5px solid #79589F;
 }
 
@@ -66,7 +66,7 @@ a:hover, a:visited {
   margin-top: 16px;
   font-weight: normal;
   text-align: center;
-  font: 18px 'Cutive Mono', serif;
+  font: 18px 'Cousine', serif;
   text-decoration: none;
 }
 
@@ -75,7 +75,7 @@ a:hover, a:visited {
 }
 
 .moment h2 {
-  font-family: 'Cutive Mono', serif;
+  font-family: 'Cousine', serif;
   text-decoration: none;
   font-weight: normal;
   text-align: center;
@@ -104,7 +104,7 @@ a:hover, a:visited {
 }
 
 p {
-  font-family: 'Cutive Mono';
+  font-family: 'Cousine';
   line-height: 1.6;
   font-weight: 300;
 }
@@ -122,7 +122,7 @@ footer {
 }
 
 .index {
-  font-family: 'Cutive Mono';
+  font-family: 'Cousine';
   font-weight: 300;
 }
 
