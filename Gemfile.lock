@@ -28,6 +28,7 @@ GEM
       rack (>= 0.4)
     rack-protection (1.5.3)
       rack
+    rake (12.3.1)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -46,6 +47,7 @@ DEPENDENCIES
   pry
   puma
   rack-cache
+  rake
   sinatra
 
 RUBY VERSION
