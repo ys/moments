@@ -29,6 +29,7 @@ GEM
     rack-ssl-enforcer (0.2.9)
     rack-test (0.6.3)
       rack (>= 1.0)
+    rake (12.3.1)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -60,6 +61,7 @@ DEPENDENCIES
   puma
   rack-cache
   rack-ssl-enforcer
+  rake
   sinatra
   sinatra-contrib
   sinatra-router
